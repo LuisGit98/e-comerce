@@ -1,9 +1,9 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column('text', {
     unique: true,
@@ -35,11 +35,28 @@ export class Product {
   @Column('text')
   gender: string;
 
+  @Column('text',{
+    array:true,
+    default:[]
+  })
+  tags:String[]
+
+
   @BeforeInsert()
   checkSlugInsert() {
     if (!this.slug) {
       this.slug = this.title;
     }
     this.slug = this.slug.toLowerCase().replaceAll(' ', '_'); //reemplaza lo primero por lo segundo
+  }
+
+//aqui puedo limpiar mi informacion que viene del cliente para adaptarla a al db 
+  @BeforeUpdate()
+  checkSlugUpdate(){
+    this.slug = this.slug
+    .toLowerCase()
+    .replaceAll(' ', '_')
+    .replaceAll("'",' ')
+
   }
 }
