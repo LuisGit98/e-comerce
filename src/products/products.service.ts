@@ -141,7 +141,7 @@ export class ProductsService {
     }
   }
 
-  //esta funciuon remove da un error de constraint por que va uqerer borrar algo que tiene una relacion 
+  //la solucion que se uso fue borrar un producto en cascade 
   async remove(id: string) {
     const del = await this.findOne(id);
     if (del) {

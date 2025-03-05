@@ -11,7 +11,8 @@ export class UrlImages {
 
     @ManyToOne(
         () => Product,
-        (product) => product.images
+        (product) => product.images,
+        {onDelete:'CASCADE'}//que hacer cuando se elimine un producto 
     )
     product:Product
 }
