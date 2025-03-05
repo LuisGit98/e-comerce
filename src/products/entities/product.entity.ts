@@ -1,4 +1,5 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { UrlImages } from './images.entity';
 
 @Entity()
 export class Product {
@@ -41,6 +42,16 @@ export class Product {
   })
   tags:String[]
 
+  @OneToMany(
+    ()=>UrlImages,
+    (urlImage) => urlImage.product ,
+    {cascade:true,
+      eager:true //esto significa que cada que uso un metodo find() automaticamente cargara las imagenes. Sin esto en true no me trae en arreglo de imagenes
+      //Pero si intento buscar por nombre del producto o por slug no me trae el array de imgs. Esto pasa por estar usando query builder por lo que tengo que usar 
+      //leftJointAndSelect() y especificar la relacion 
+    }
+  )
+  images?:UrlImages[]
 
   @BeforeInsert()
   checkSlugInsert() {

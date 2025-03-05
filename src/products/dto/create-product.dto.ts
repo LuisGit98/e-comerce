@@ -21,12 +21,22 @@ export class CreateProductDto {
     @IsNumber()
     stock:number
 
+    @IsArray()
+    tags:String[]
+
     @IsString({each:true})
     @IsArray()
     size:string[]
-
+    
     @IsString()
     @IsIn(['men','women','kid','unisex'])
     gender:string
+
+    @IsString({each:true}) //como es un array destringd importnate ponerle each:true
+    @IsArray()
+    @IsOptional()
+    images?:string[]
+
+
 
 }
