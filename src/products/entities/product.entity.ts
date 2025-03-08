@@ -1,7 +1,11 @@
 import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UrlImages } from './images.entity';
 
-@Entity()
+@Entity({
+  name:'products'
+}
+  
+)
 export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -31,7 +35,7 @@ export class Product {
   @Column('text', {
     array: true,
   })
-  size: string[];
+  sizes: string[];
 
   @Column('text')
   gender: string;

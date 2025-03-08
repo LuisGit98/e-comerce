@@ -5,9 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { UrlImages } from './entities/images.entity';
 
+
+//module de donde lo quiero hacer visible el service
 @Module({
   controllers: [ProductsController],
   providers: [ProductsService],
-  imports:[TypeOrmModule.forFeature([Product,UrlImages])]
+  imports:[TypeOrmModule.forFeature([Product,UrlImages])],
+  exports:[ProductsService]
 })
 export class ProductsModule {}

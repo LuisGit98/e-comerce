@@ -16,6 +16,7 @@ import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { isUUID } from 'class-validator';
 import { UrlImages } from './entities/images.entity';
 import { url } from 'inspector';
+import e from 'express';
 
 @Injectable()
 export class ProductsService {
@@ -165,5 +166,21 @@ export class ProductsService {
       ...rest,
       images: images.map((image) => image.url),
     };
+  }
+
+  //borrar todo con queryBuilder
+  async deleteAll(){
+    const query = this.productRepository.createQueryBuilder('product')
+    try {
+      
+      return await query
+      .delete()
+      .where({})
+      .execute()
+
+    } catch (error) {
+      this.handleErrors(error)
+    }
+
   }
 }
