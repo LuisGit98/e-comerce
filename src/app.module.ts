@@ -9,6 +9,7 @@ import { ProductsModule } from './products/products.module';
 import { CommonModule } from './common/common.module';
 import { SeedModule } from './seed/seed.module';
 import { UploadFilesModule } from './upload-files/upload-files.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { UploadFilesModule } from './upload-files/upload-files.module';
     CommonModule,
     SeedModule,
     UploadFilesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

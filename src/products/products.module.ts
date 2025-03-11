@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { UrlImages } from './entities/images.entity';
 
-
 //module de donde lo quiero hacer visible el service
 @Module({
   controllers: [ProductsController],
