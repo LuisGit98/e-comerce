@@ -13,6 +13,6 @@ export class LoginUser {
   })
   password: string;
 
-  @IsString()
-  fullName: string;
+  // @IsString()
+  // fullName: string;
 }
