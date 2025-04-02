@@ -11,12 +11,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { DataSource, Repository } from 'typeorm';
 import { error } from 'console';
-
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { isUUID } from 'class-validator';
 import { UrlImages } from './entities/images.entity';
-import { url } from 'inspector';
-import e from 'express';
+import { User } from 'src/auth/entities/user.entity';
 
 @Injectable()
 export class ProductsService {
@@ -31,7 +29,7 @@ export class ProductsService {
     private readonly imgUrlRepository: Repository<UrlImages>,
     private readonly dataSource: DataSource,
   ) {}
-  async create(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto, user: User) {
     try {
       // if (!createProductDto.slug){
 
@@ -47,8 +45,9 @@ export class ProductsService {
       const { images = [], ...productDetails } = createProductDto;
       const product = this.productRepository.create({
         ...productDetails, //sin las imagenes
-        images: images.map((image) =>
-          this.imgUrlRepository.create({ url: image }),
+        user,//agregando el user 
+        images: images.map(
+          (image) => this.imgUrlRepository.create({ url: image }),
         ),
       });
 
@@ -142,7 +141,7 @@ export class ProductsService {
     }
   }
 
-  //la solucion que se uso fue borrar un producto en cascade 
+  //la solucion que se uso fue borrar un producto en cascade
   async remove(id: string) {
     const del = await this.findOne(id);
     if (del) {
@@ -169,18 +168,12 @@ export class ProductsService {
   }
 
   //borrar todo con queryBuilder
-  async deleteAll(){
-    const query = this.productRepository.createQueryBuilder('product')
+  async deleteAll() {
+    const query = this.productRepository.createQueryBuilder('product');
     try {
-      
-      return await query
-      .delete()
-      .where({})
-      .execute()
-
+      return await query.delete().where({}).execute();
     } catch (error) {
-      this.handleErrors(error)
+      this.handleErrors(error);
     }
-
   }
 }

@@ -18,6 +18,7 @@ import { User } from './entities/user.entity';
 import { RoleProtected } from './decorators/role-protected.decorator';
 import { ValidRoles } from './interfaces/valid-roles';
 import { UserRoleGuard } from './guards/user-role.guard';
+import { Auth } from './decorators/auth.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -43,4 +44,14 @@ export class AuthController {
       user,
     };
   }
+  @Get('/privada2')
+  @Auth(ValidRoles.admin)
+  testPrivateRoute2(@GetUser() user: User) {
+    return {
+      res: 'privada 2 ok',
+      user,
+    };
+  }
+
+  
 }

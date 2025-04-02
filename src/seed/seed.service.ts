@@ -19,9 +19,9 @@ export class SeedService {
 
     //productDto tenia la propiedad size y en el array de products viene sizes
     //ya la cambie nomas hayq que ver si da error 
-    products.forEach(product => {
-      this.productService.create(product)
-    })
+    // products.forEach(product => {
+    //   this.productService.create(product)
+    // })
 
     await Promise.all(inserPromises)
 
