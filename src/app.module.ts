@@ -1,7 +1,4 @@
-import { join } from 'path';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -13,10 +10,10 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    // ServeStaticModule.forRoot({   ejemplo de como exponer las imagenes de forma estica
+    // ServeStaticModule.forRoot({   ejemplo de como exponer las imagenes de forma estatica
     //   rootPath:join(__dirname,'..','public')
     // }),
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({isGlobal:true}),
     TypeOrmModule.forRoot({
       
       type: 'postgres',
@@ -33,8 +30,6 @@ import { AuthModule } from './auth/auth.module';
     SeedModule,
     UploadFilesModule,
     AuthModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  ]
 })
 export class AppModule {}

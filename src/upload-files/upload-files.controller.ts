@@ -1,7 +1,9 @@
 import {
   Controller,
+  FileTypeValidator,
   Get,
   Param,
+  ParseFilePipe,
   Post,
   Res,
   UploadedFile,
@@ -10,7 +12,7 @@ import {
 import { UploadFilesService } from './upload-files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { filter } from './helpers/file-filer.helper';
-import { diskStorage } from 'multer';
+import { diskStorage, Multer } from 'multer';
 import { filrNamer } from './helpers/namer.helper';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
@@ -21,6 +23,20 @@ export class UploadFilesController {
     private readonly uploadFilesService: UploadFilesService,
     private readonly configService: ConfigService,
   ) {}
+
+  @Post('/files')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFileS3(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators:[new FileTypeValidator({fileType:'image/jpeg'})]
+      })
+    ) file: Express.Multer.File) {
+    console.log(file)
+     const res =  await this.uploadFilesService.sendToS3(file.originalname, file.buffer)
+     console.log(res)
+
+  }
 
   @Post('/product')
   @UseInterceptors(

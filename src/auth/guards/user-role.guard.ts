@@ -23,6 +23,7 @@ export class UserRoleGuard implements CanActivate {
     );
 
     if(!validateRoles)return true //si no existen role, entra cualquiera
+    if(validateRoles.length==0)return true
 
     const req = context.switchToHttp().getRequest();
     const user = req.user; //puedo agregar as User para usar la entitie y autocompletar

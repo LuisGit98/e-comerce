@@ -68,14 +68,14 @@ export class ProductsService {
         take: limit, //cuantos mostrar
         skip: offset, //offset = saltar resultados
         relations: { images: true },
-      });
+      });  
 
       return products.map((product) => ({
         ...product,
         images: product.images?.map((img) => img.url),
       }));
     } catch (error) {
-      throw new InternalServerErrorException('valio erga pa ');
+      throw new InternalServerErrorException('error, no encontrado');
     }
   }
 
@@ -176,4 +176,5 @@ export class ProductsService {
       this.handleErrors(error);
     }
   }
+
 }

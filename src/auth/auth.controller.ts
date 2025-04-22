@@ -4,10 +4,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
-  SetMetadata,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-user.dto';
@@ -34,6 +30,13 @@ export class AuthController {
     return this.authService.login(loginUser);
   }
 
+  @Get('/check-auth')
+  @Auth()
+  checkAuth(@GetUser() user: User) {
+    console.log(user.id);
+    return this.authService.checkStatus(user); 
+  }
+
   //@SetMetadata('roles',['user','admin','super'])    este decorador lo use para crear roles directamente nomas para saber como
   @Get('/privada')
   @RoleProtected(ValidRoles.superUser)
@@ -45,13 +48,11 @@ export class AuthController {
     };
   }
   @Get('/privada2')
-  @Auth(ValidRoles.admin)
+  @Auth(ValidRoles.admin)//washa como quedo al final el decorador implementando guards
   testPrivateRoute2(@GetUser() user: User) {
     return {
       res: 'privada 2 ok',
       user,
     };
   }
-
-  
 }

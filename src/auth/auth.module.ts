@@ -21,8 +21,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService:ConfigService) => {
-        //func que se llama cuando el modulo se intenta llamar de forma async
-        console.log(process.env.JWT_SECRET,configService.get('JWT_SECRET'))
+        //func que se llama cuando el modulo se intenta llamar de forma async  
         return {
           secret: configService.get('JWT_SECRET'),
           signOptions: {
@@ -31,7 +30,6 @@ import { JwtStrategy } from './strategies/jwt.strategy';
         };
       },
     }),
-
     // JwtModule.register({
     //   secret:'secret',
     //   signOptions:{

@@ -22,10 +22,12 @@ export class ProductsController {
   }
 
   @Get()
+  @Auth()
   findAll(@Query() paginationDto:PaginationDto) {
     //le mando el query que se escriba en el cliente
     return this.productsService.findAll(paginationDto);
   }
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {

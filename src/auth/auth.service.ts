@@ -43,16 +43,21 @@ export class AuthService {
 
       });
 
-      if (!user){ throw new BadRequestException('no hay ese user');}
+      if (!user){ throw new BadRequestException('usuario no encontrado');}
 
       if (!bcrypt.compareSync(password, user.password)) {
-        throw new BadRequestException('no esta bien eso');
+        throw new BadRequestException('');
       }
   
       return { ...user, token: this.getJwt({ id: user.id }) };
     } catch (error) {
       console.log(error)
     }
+  }
+
+  async checkStatus(user:User){//esta funcion es para regenerar el token 
+    
+    return { ...user, token: this.getJwt({ id: user.id }) };
   }
 
   private getJwt(payload: JwtPayload) {
